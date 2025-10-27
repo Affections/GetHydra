@@ -270,7 +270,7 @@
             "content_max_width": 100,
             "content_padding_top": 30,
             "content_padding_bottom": 30,
-            "content_padding_left": 45,
+            "content_padding_left": 40,
             "content_padding_right": 40,
             "text_alignment_horizontal": "left",
             "text_alignment_vertical": "bottom",
