@@ -3606,7 +3606,7 @@ details-disclosure > details {
 .header {
     grid-template-areas: "icons heading left-icons" !important;
     padding-left: 24px !important;
-    padding-right: 12px !important;
+    padding-right: 24px !important;
 }
 .header__icons {
     display: flex !important;

@@ -599,6 +599,25 @@ class HeaderDrawer extends MenuDrawer {
 
 customElements.define('header-drawer', HeaderDrawer);
 
+document.addEventListener('click', function(event) {
+  const menuItem = event.target.closest('.menu-drawer__menu-item');
+  if (menuItem) {
+    document.body.classList.remove('overflow-hidden', 'overflow-hidden-tablet', 'overflow-hidden-mobile');
+    const details = document.querySelector('details[open]');
+    if (details) {
+      details.removeAttribute('open');
+    }
+    const menuDrawer = document.querySelector('#menu-drawer');
+    if (menuDrawer) {
+      menuDrawer.classList.remove('menu-opening');
+      menuDrawer.querySelectorAll('details').forEach(detail => {
+        detail.removeAttribute('open');
+        detail.classList.remove('menu-opening');
+      });
+    }
+  }
+});
+
 class ModalDialog extends HTMLElement {
   constructor() {
     super();
