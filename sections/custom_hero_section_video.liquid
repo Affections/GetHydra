@@ -197,22 +197,23 @@
           {%- endif -%}
 
           {% if block.settings.heading != blank %}
-            <div
-              class="slide-heading"
-              data-desktop-size="{{ block.settings.heading_size_desktop }}"
-              data-mobile-size="{{ block.settings.heading_size_mobile }}"
-              style="
-                max-width: {{ block.settings.content_width }}%;
-                color: {{ block.settings.heading_color }};
-                font-weight: {{ block.settings.heading_weight }};
-                letter-spacing: {{ block.settings.heading_letter_spacing }}px;
-                line-height: {{ block.settings.heading_line_height }};
-                text-transform: {{ block.settings.heading_transform }};
-              "
-            >
-              {{ block.settings.heading }}
-            </div>
-          {% endif %}
+              <div
+                class="slide-heading"
+                style="
+                  --heading-max-width: {{ block.settings.content_width }}%;
+                  --heading-color: {{ block.settings.heading_color }};
+                  --heading-weight: {{ block.settings.heading_weight }};
+                  --heading-letter-spacing: {{ block.settings.heading_letter_spacing }}px;
+                  --heading-line-height: {{ block.settings.heading_line_height }};
+                  --heading-transform: {{ block.settings.heading_transform }};
+                "
+                data-desktop-size="{{ block.settings.heading_size_desktop }}"
+                data-mobile-size="{{ block.settings.heading_size_mobile }}"
+              >
+                {{ block.settings.heading }}
+              </div>
+            {% endif %}
+
 
           {% if block.settings.subheading != blank %}
             <div
@@ -532,11 +533,17 @@
       top: auto;
     }
 
-    /* Block-level Typography using CSS Variables */
-    .slide-heading {
+   
+    .slide-heading h1{
       margin: 0 0 20px;
       font-family: 'Cy';
       font-size: var(--slide-heading-font-size);
+      max-width: var(--heading-max-width);
+      color: var(--heading-color);
+      font-weight: var(--heading-weight);
+      letter-spacing: var(--heading-letter-spacing);
+      line-height: var(--heading-line-height);
+      text-transform: var(--heading-transform);
     }
 
     .mobile-heading {
