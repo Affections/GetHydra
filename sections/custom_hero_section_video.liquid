@@ -197,7 +197,7 @@
           {%- endif -%}
 
           {% if block.settings.heading != blank %}
-            <h1
+            <div
               class="slide-heading"
               data-desktop-size="{{ block.settings.heading_size_desktop }}"
               data-mobile-size="{{ block.settings.heading_size_mobile }}"
@@ -211,7 +211,7 @@
               "
             >
               {{ block.settings.heading }}
-            </h1>
+            </div>
           {% endif %}
 
           {% if block.settings.subheading != blank %}
@@ -1435,10 +1435,9 @@
           "content": "Heading Settings"
         },
         {
-          "type": "text",
+          "type": "richtext",
           "id": "heading",
-          "label": "Heading",
-          "default": "Slide Heading"
+          "label": "Heading"
         },
         {
           "type": "color",
@@ -1790,7 +1789,6 @@
         {
           "type": "slide",
           "settings": {
-            "heading": "$500 OFF SKYTRAK+ & STUDIO PACKAGES",
             "button_primary_text": "Shop Now",
             "button_secondary_text": "Learn More"
           }
