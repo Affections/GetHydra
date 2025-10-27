@@ -789,6 +789,83 @@
       padding: 0 10px;
     }
   }
+  /* ============================================
+   SIMPLE COPY-PASTE IMAGE FIX
+   Just copy this entire code and paste into
+   your theme CSS file. That's it!
+   ============================================ */
+
+/* Basic Card Structure */
+.grid-card {
+  position: relative;
+  width: 100%;
+  height: 100%;
+  overflow: hidden;
+}
+
+/* Image Container - Maintains Aspect Ratio */
+.card-background {
+  position: relative;
+  width: 100%;
+  padding-top: 100%; /* Square by default */
+  overflow: hidden;
+  background: #f5f5f5;
+}
+
+/* Image Positioning - Fills Container */
+.card-image {
+  position: absolute !important;
+  top: 0 !important;
+  left: 0 !important;
+  width: 100% !important;
+  height: 100% !important;
+  object-fit: cover !important;
+  object-position: center !important;
+}
+
+/* Content Overlay */
+.card-content {
+  position: absolute !important;
+  top: 0 !important;
+  left: 0 !important;
+  width: 100% !important;
+  height: 100% !important;
+  z-index: 2 !important;
+  display: flex !important;
+  flex-direction: column !important;
+}
+
+/* Image Overlay */
+.card-overlay {
+  position: absolute !important;
+  top: 0 !important;
+  left: 0 !important;
+  width: 100% !important;
+  height: 100% !important;
+  z-index: 1 !important;
+}
+
+/* Desktop/Mobile Image Switch */
+.card-image--mobile {
+  display: none;
+}
+
+/* Mobile Styles */
+@media screen and (max-width: 768px) {
+  /* Show mobile image if available */
+  .card-image--mobile {
+    display: block !important;
+  }
+  .card-image--desktop {
+    display: none !important;
+  }
+  /* If no mobile image, show desktop */
+  .card-background:not(:has(.card-image--mobile)) .card-image--desktop {
+    display: block !important;
+  }
+}
+
+   ============================================ */
 </style>
 
 {% schema %}
