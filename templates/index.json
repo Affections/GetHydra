@@ -288,7 +288,7 @@
             "heading_transform": "none",
             "heading_text_shadow": false,
             "heading_margin_bottom": 8,
-            "subheading": "Share goals, routine & \npreferences.",
+            "subheading": "Share goals, routine & <br preferences.>",
             "subheading_color": "#ffffff",
             "subheading_size_desktop": 19,
             "subheading_size_mobile": 16,
