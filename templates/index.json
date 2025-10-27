@@ -33,7 +33,7 @@
             "content_padding_right": 50,
             "text_alignment": "left",
             "vertical_alignment": "bottom",
-            "heading": "Supplements that know the drill - curated & dialed.",
+            "heading": "<h1>Supplements that<br/> know the drill -<br/> curated & dialed.</h1>",
             "heading_color": "#ffffff",
             "heading_size_desktop": 51,
             "heading_size_mobile": 36,
