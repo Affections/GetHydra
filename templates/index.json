@@ -467,7 +467,7 @@
         "heading_alignment_mobile": "left",
         "container_width": "medium",
         "grid_columns_desktop": "3",
-        "grid_columns_tablet": "2",
+        "grid_columns_tablet": "3",
         "grid_columns_mobile": "1",
         "grid_gap": 20,
         "enable_mobile_slider": true,
