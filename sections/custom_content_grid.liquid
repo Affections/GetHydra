@@ -73,125 +73,215 @@
          data-columns-mobile="{{ section.settings.grid_columns_mobile }}"
          data-gap="{{ section.settings.grid_gap }}">
       
-      {% for block in section.blocks %}
-        <div class="grid-item grid-item-{{ block.id }}
-                    grid-item--{{ block.settings.card_size }}
-                    {% if block.settings.card_height == 'custom' %}grid-item--custom-height{% endif %}"
-             style="
-               {% if block.settings.card_height == 'custom' %}
-                 --card-height-desktop: {{ block.settings.card_height_desktop }}px;
-                 --card-height-mobile: {{ block.settings.card_height_mobile }}px;
-               {% endif %}
-             "
-             {{ block.shopify_attributes }}>
-          
-          <div class="grid-card">
-            {% if block.settings.card_link != blank %}
-              <a href="{{ block.settings.card_link }}" class="card-link" aria-label="{{ block.settings.heading }}">
-            {% endif %}
-            
-            <div class="card-background">
-              {% if block.settings.card_image %}
-                <img 
-                  src="{{ block.settings.card_image | img_url: '1200x' }}"
-                  alt="{{ block.settings.heading | escape }}"
-                  class="card-image card-image--desktop"
-                  loading="lazy"
-                  style="object-fit: {{ block.settings.image_fit }}; object-position: {{ block.settings.image_position_x }}% {{ block.settings.image_position_y }}%;"
-                >
-              {% endif %}
-              
-              {% if block.settings.card_image_mobile %}
-                <img 
-                  src="{{ block.settings.card_image_mobile | img_url: '800x' }}"
-                  alt="{{ block.settings.heading | escape }}"
-                  class="card-image card-image--mobile"
-                  loading="lazy"
-                  style="object-fit: {{ block.settings.image_fit }}; object-position: {{ block.settings.image_position_x }}% {{ block.settings.image_position_y }}%;"
-                >
-              {% endif %}
-              
-              {% if block.settings.overlay_opacity > 0 %}
-                <div class="card-overlay" style="
-                  {% if block.settings.overlay_color != blank %}
-                    background-color: {{ block.settings.overlay_color }};
-                  {% endif %}
-                  opacity: {{ block.settings.overlay_opacity | divided_by: 100.0 }};
-                "></div>
-              {% endif %}
-            </div>
-            
-            {% if block.settings.card_link != blank %}
-              </a>
-            {% endif %}
-            
-            <div class="card-content 
-                        text-align-{{ block.settings.text_alignment_horizontal }}
-                        vertical-align-{{ block.settings.text_alignment_vertical }}"
-                 style="
-                   max-width: {{ block.settings.content_max_width }}%;
-                   padding: {{ block.settings.content_padding_top }}px {{ block.settings.content_padding_right }}px {{ block.settings.content_padding_bottom }}px {{ block.settings.content_padding_left }}px;
-                 ">
-              {% if block.settings.subheadingg != blank %}
-                <p class="card-subheading_block" style="
-                  color: {{ block.settings.subheading_color }};
-                  text-align: {{ block.settings.text_alignment_horizontal }};
-                ">
-                  {{ block.settings.subheadingg }}
-                </p>
-              {% endif %}
-              
-              {% if block.settings.heading != blank %}
-                <h3 class="card-heading" style="
-                  color: {{ block.settings.heading_color }};
-                  font-weight: {{ block.settings.heading_weight }};
-                  letter-spacing: {{ block.settings.heading_letter_spacing }}px;
-                  line-height: {{ block.settings.heading_line_height }};
-                  text-transform: {{ block.settings.heading_transform }};
-                  margin-bottom: {{ block.settings.heading_margin_bottom }}px;
-                ">
-                  {{ block.settings.heading }}
-                </h3>
-              {% endif %}
-              
-              {% if block.settings.subheading != blank %}
-                <div class="card-subheading" style="
-                  color: {{ block.settings.subheading_color }};
-                  font-weight: {{ block.settings.subheading_weight }};
-                  letter-spacing: {{ block.settings.subheading_letter_spacing }}px;
-                  line-height: {{ block.settings.subheading_line_height }};
-                  margin-bottom: {{ block.settings.subheading_margin_bottom }}px;
-                  {% if block.settings.subheading_text_shadow %}
-                    text-shadow: 2px 2px 4px rgba(0,0,0,0.5);
-                  {% endif %}
-                ">
-                  {{ block.settings.subheading }}
-                </div>
-              {% endif %}
-              
-              {% if block.settings.button_text != blank %}
-                <a href="{{ block.settings.button_link }}" 
-                   class="card-button"
-                   style="
-                     {% if block.settings.button_bg_color != blank %}
-                       background-color: {{ block.settings.button_bg_color }};
-                     {% endif %}
-                     {% if block.settings.button_text_color != blank %}
-                       color: {{ block.settings.button_text_color }};
-                     {% endif %}
-                     padding: {{ block.settings.button_padding_y }}px {{ block.settings.button_padding_x }}px;
-                     border-radius: {{ block.settings.button_border_radius }}px;
-                     font-weight: {{ block.settings.button_font_weight }};
-                     text-transform: {{ block.settings.button_text_transform }};
-                     letter-spacing: {{ block.settings.button_letter_spacing }}px;
-                   ">
-                  {{ block.settings.button_text }}
-                </a>
-              {% endif %}
-            </div>
+    
+{% for block in section.blocks %}
+  {% liquid
+    # Calculate aspect ratio class based on settings
+    assign aspect_class = ''
+    if block.settings.aspect_ratio == '1-1'
+      assign aspect_class = 'aspect-ratio-1-1'
+    elsif block.settings.aspect_ratio == '4-3'
+      assign aspect_class = 'aspect-ratio-4-3'
+    elsif block.settings.aspect_ratio == '3-2'
+      assign aspect_class = 'aspect-ratio-3-2'
+    elsif block.settings.aspect_ratio == '16-9'
+      assign aspect_class = 'aspect-ratio-16-9'
+    elsif block.settings.aspect_ratio == '21-9'
+      assign aspect_class = 'aspect-ratio-21-9'
+    endif
+    
+    # Mobile aspect ratio
+    assign mobile_aspect_class = ''
+    if block.settings.mobile_aspect_ratio != 'same'
+      assign mobile_aspect_class = 'mobile-' | append: block.settings.mobile_aspect_ratio
+    endif
+  %}
+  
+  <div class="grid-item grid-item-{{ block.id }}
+              grid-item--{{ block.settings.card_size }}
+              {{ aspect_class }}
+              {{ mobile_aspect_class }}
+              {% if block.settings.card_height == 'custom' %}grid-item--custom-height{% endif %}
+              {% if block.settings.maintain_image_aspect %}maintain-aspect{% endif %}"
+       style="
+         {% if block.settings.card_height == 'custom' or block.settings.aspect_ratio == 'custom' %}
+           --card-height-desktop: {{ block.settings.card_height_desktop }}px;
+           --card-height-mobile: {{ block.settings.card_height_mobile }}px;
+         {% endif %}
+       "
+       {{ block.shopify_attributes }}>
+    
+    <div class="grid-card">
+      {% comment %} Wrapper link if card is clickable {% endcomment %}
+      {% if block.settings.card_link != blank %}
+        <a href="{{ block.settings.card_link }}" class="card-link" aria-label="{{ block.settings.heading | escape }}">
+      {% endif %}
+      
+      {% comment %} Image Background Container {% endcomment %}
+      <div class="card-background">
+        {% comment %} Desktop Image {% endcomment %}
+        {% if block.settings.card_image %}
+          <img 
+            src="{{ block.settings.card_image | img_url: '1200x' }}"
+            srcset="
+              {{ block.settings.card_image | img_url: '400x' }} 400w,
+              {{ block.settings.card_image | img_url: '600x' }} 600w,
+              {{ block.settings.card_image | img_url: '800x' }} 800w,
+              {{ block.settings.card_image | img_url: '1000x' }} 1000w,
+              {{ block.settings.card_image | img_url: '1200x' }} 1200w,
+              {{ block.settings.card_image | img_url: '1600x' }} 1600w
+            "
+            sizes="(max-width: 768px) 100vw, (max-width: 1024px) 50vw, 33vw"
+            alt="{{ block.settings.heading | default: 'Card image' | escape }}"
+            class="card-image card-image--desktop"
+            loading="lazy"
+            width="{{ block.settings.card_image.width }}"
+            height="{{ block.settings.card_image.height }}"
+            onload="this.classList.add('loaded')"
+            style="
+              object-fit: {{ block.settings.image_fit | default: 'cover' }};
+              object-position: {{ block.settings.image_position_x | default: 50 }}% {{ block.settings.image_position_y | default: 50 }}%;
+            "
+          >
+        {% else %}
+          {% comment %} Placeholder if no image {% endcomment %}
+          <div class="card-image-placeholder">
+            <svg width="60" height="60" viewBox="0 0 60 60" fill="none" xmlns="http://www.w3.org/2000/svg">
+              <rect width="60" height="60" fill="#E5E5E5"/>
+              <path d="M20 25L25 30L30 25L40 35L45 30L50 35V45H10V25L15 30L20 25Z" fill="#CCCCCC"/>
+              <circle cx="35" cy="20" r="5" fill="#CCCCCC"/>
+            </svg>
+            <p>No Image</p>
           </div>
-        </div>
-      {% endfor %}
+        {% endif %}
+        
+        {% comment %} Mobile Image (if provided) {% endcomment %}
+        {% if block.settings.card_image_mobile %}
+          <img 
+            src="{{ block.settings.card_image_mobile | img_url: '800x' }}"
+            srcset="
+              {{ block.settings.card_image_mobile | img_url: '400x' }} 400w,
+              {{ block.settings.card_image_mobile | img_url: '600x' }} 600w,
+              {{ block.settings.card_image_mobile | img_url: '800x' }} 800w,
+              {{ block.settings.card_image_mobile | img_url: '1000x' }} 1000w
+            "
+            sizes="100vw"
+            alt="{{ block.settings.heading | default: 'Card image' | escape }}"
+            class="card-image card-image--mobile"
+            loading="lazy"
+            width="{{ block.settings.card_image_mobile.width }}"
+            height="{{ block.settings.card_image_mobile.height }}"
+            onload="this.classList.add('loaded')"
+            style="
+              object-fit: {{ block.settings.image_fit | default: 'cover' }};
+              object-position: {{ block.settings.image_position_x | default: 50 }}% {{ block.settings.image_position_y | default: 50 }}%;
+            "
+          >
+        {% endif %}
+        
+        {% comment %} Image Overlay {% endcomment %}
+        {% if block.settings.overlay_opacity > 0 %}
+          <div class="card-overlay" style="
+            {% if block.settings.overlay_color != blank %}
+              background-color: {{ block.settings.overlay_color }};
+            {% else %}
+              background-color: rgba(0, 0, 0, 0.3);
+            {% endif %}
+            opacity: {{ block.settings.overlay_opacity | divided_by: 100.0 }};
+          "></div>
+        {% endif %}
+      </div>
+      
+      {% comment %} Close link if opened {% endcomment %}
+      {% if block.settings.card_link != blank %}
+        </a>
+      {% endif %}
+      
+      {% comment %} Card Content Overlay {% endcomment %}
+      <div class="card-content 
+                  text-align-{{ block.settings.text_alignment_horizontal | default: 'center' }}
+                  vertical-align-{{ block.settings.text_alignment_vertical | default: 'middle' }}"
+           style="
+             max-width: {{ block.settings.content_max_width | default: 100 }}%;
+             padding: {{ block.settings.content_padding_top | default: 30 }}px 
+                      {{ block.settings.content_padding_right | default: 30 }}px 
+                      {{ block.settings.content_padding_bottom | default: 30 }}px 
+                      {{ block.settings.content_padding_left | default: 30 }}px;
+           ">
+        
+        {% comment %} Top Subheading {% endcomment %}
+        {% if block.settings.subheadingg != blank %}
+          <p class="card-subheading_block" style="
+            color: {{ block.settings.subheading_color | default: '#ffffff' }};
+            text-align: {{ block.settings.text_alignment_horizontal | default: 'center' }};
+          ">
+            {{ block.settings.subheadingg }}
+          </p>
+        {% endif %}
+        
+        {% comment %} Main Heading {% endcomment %}
+        {% if block.settings.heading != blank %}
+          <h3 class="card-heading" style="
+            color: {{ block.settings.heading_color | default: '#ffffff' }};
+            font-weight: {{ block.settings.heading_weight | default: 700 }};
+            letter-spacing: {{ block.settings.heading_letter_spacing | default: 0 }}px;
+            line-height: {{ block.settings.heading_line_height | default: 1.2 }};
+            text-transform: {{ block.settings.heading_transform | default: 'none' }};
+            margin-bottom: {{ block.settings.heading_margin_bottom | default: 15 }}px;
+          ">
+            {{ block.settings.heading }}
+          </h3>
+        {% endif %}
+        
+        {% comment %} Description/Subheading {% endcomment %}
+        {% if block.settings.subheading != blank %}
+          <div class="card-subheading" style="
+            color: {{ block.settings.subheading_color | default: '#ffffff' }};
+            font-weight: {{ block.settings.subheading_weight | default: 400 }};
+            letter-spacing: {{ block.settings.subheading_letter_spacing | default: 0 }}px;
+            line-height: {{ block.settings.subheading_line_height | default: 1.5 }};
+            margin-bottom: {{ block.settings.subheading_margin_bottom | default: 20 }}px;
+            {% if block.settings.subheading_text_shadow %}
+              text-shadow: 2px 2px 4px rgba(0,0,0,0.5);
+            {% endif %}
+          ">
+            {{ block.settings.subheading }}
+          </div>
+        {% endif %}
+        
+        {% comment %} Call to Action Button {% endcomment %}
+        {% if block.settings.button_text != blank %}
+          <a href="{{ block.settings.button_link | default: '#' }}" 
+             class="card-button"
+             style="
+               {% if block.settings.button_bg_color != blank %}
+                 background-color: {{ block.settings.button_bg_color }};
+               {% else %}
+                 background-color: #E30613;
+               {% endif %}
+               {% if block.settings.button_text_color != blank %}
+                 color: {{ block.settings.button_text_color }};
+               {% else %}
+                 color: #ffffff;
+               {% endif %}
+               padding: {{ block.settings.button_padding_y | default: 12 }}px {{ block.settings.button_padding_x | default: 30 }}px;
+               border-radius: {{ block.settings.button_border_radius | default: 4 }}px;
+               font-weight: {{ block.settings.button_font_weight | default: 700 }};
+               text-transform: {{ block.settings.button_text_transform | default: 'uppercase' }};
+               letter-spacing: {{ block.settings.button_letter_spacing | default: 1 }}px;
+               display: inline-block;
+               text-decoration: none;
+               transition: all 0.3s ease;
+             "
+             onmouseover="this.style.opacity='0.9'; this.style.transform='translateY(-2px)'"
+             onmouseout="this.style.opacity='1'; this.style.transform='translateY(0)'">
+            {{ block.settings.button_text }}
+          </a>
+        {% endif %}
+      </div>
+    </div>
+  </div>
+{% endfor %}
     </div>
     
     {% if section.settings.enable_mobile_slider and section.blocks.size > 1 %}
