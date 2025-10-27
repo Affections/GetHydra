@@ -1,5 +1,5 @@
 {% style %}
-  #shopify-section-{{ section.id }} .features-bar-wrapper {
+  #{% if section.settings.custom_section_id != blank %}{{ section.settings.custom_section_id }}{% else %}features-bar-{{ section.id }}{% endif %} {
     margin-top: {{ section.settings.margin_top_desktop }}px;
     margin-bottom: {{ section.settings.margin_bottom_desktop }}px;
     padding-top: {{ section.settings.padding_top_desktop }}px;
@@ -22,7 +22,7 @@
   }
 
   @media screen and (max-width: 768px) {
-    #shopify-section-{{ section.id }} .features-bar-wrapper {
+    #{% if section.settings.custom_section_id != blank %}{{ section.settings.custom_section_id }}{% else %}features-bar-{{ section.id }}{% endif %} {
       margin-top: {{ section.settings.margin_top_mobile }}px;
       margin-bottom: {{ section.settings.margin_bottom_mobile }}px;
       padding-top: {{ section.settings.padding_top_mobile }}px;
@@ -32,7 +32,7 @@
   
   /* Block-level CSS Variables */
   {% for block in section.blocks %}
-    #shopify-section-{{ section.id }} .feature-item-{{ block.id }} {
+    #{% if section.settings.custom_section_id != blank %}{{ section.settings.custom_section_id }}{% else %}features-bar-{{ section.id }}{% endif %} .feature-item-{{ block.id }} {
       --feature-heading-font-size: {{ block.settings.heading_size_desktop }}px;
       --feature-heading-font-size-mobile: {{ block.settings.heading_size_mobile }}px;
       --feature-subheading-font-size: {{ block.settings.subheading_size_desktop }}px;
@@ -43,7 +43,7 @@
   {% endfor %}
 {% endstyle %}
 
-<div class="features-bar-wrapper" id="features-bar-{{ section.id }}">
+<div class="features-bar-wrapper" id="{% if section.settings.custom_section_id != blank %}{{ section.settings.custom_section_id }}{% else %}features-bar-{{ section.id }}{% endif %}">
   <div class="features-bar-container page-width">
     {% if section.settings.top_subheading != blank or section.settings.top_heading != blank %}
       <div class="top_content">
@@ -153,7 +153,7 @@
 {% if section.settings.enable_mobile_slider %}
 <script>
   (function() {
-    const wrapper = document.getElementById('features-bar-{{ section.id }}');
+    const wrapper = document.getElementById('{% if section.settings.custom_section_id != blank %}{{ section.settings.custom_section_id }}{% else %}features-bar-{{ section.id }}{% endif %}');
     const grid = wrapper.querySelector('.features-grid');
     const items = wrapper.querySelectorAll('.feature-item');
     const prevBtn = wrapper.querySelector('.slider-nav--prev');
@@ -542,6 +542,16 @@
   "class": "features-bar-section",
   "max_blocks": 12,
   "settings": [
+    {
+      "type": "header",
+      "content": "General Settings"
+    },
+    {
+      "type": "text",
+      "id": "custom_section_id",
+      "label": "Custom Section ID",
+      "info": "Optional: Add a custom ID to this section (e.g., features-bar-wrapper)"
+    },
     {
       "type": "header",
       "content": "Top Section Content"

@@ -26,6 +26,12 @@
     height: {{ section.settings.slideshow_height_desktop }}px;
   }
 
+  @media screen and (max-width: 1105px) {
+    .slide-heading {
+      max-width: 100%!important;
+    }
+  }
+
   @media screen and (max-width: 768px) {
     #shopify-section-{{ section.id }} .slideshow-container {
       height: {{ section.settings.slideshow_height_mobile }}px;
@@ -800,18 +806,18 @@
     }
 
     .newsletter-success-custom {
-      background: linear-gradient(135deg, #4ade80 0%, #22c55e 100%);
-      color: #ffffff;
-      padding: 20px 30px;
-      border-radius: 25px;
-      font-size: 18px;
+      background: #46E191;
+      color: #0F0546;
+      line-height: 145%;
+      padding: 15px;
+      border-radius: 0 20px 20px 20px;
+      font-size: 15px;
       font-weight: 600;
       margin-top: 20px;
       display: inline-flex;
       align-items: center;
-      gap: 10px;
+      gap: 8px;
       animation: successBounce 0.6s ease-in-out;
-      box-shadow: 0 4px 20px rgba(74, 222, 128, 0.3);
     }
 
     @keyframes successBounce {

@@ -1,5 +1,5 @@
 {% style %}
-  #shopify-section-{{ section.id }} .content-grid-wrapper {
+  #{% if section.settings.custom_section_id != blank %}{{ section.settings.custom_section_id }}{% else %}content-grid-{{ section.id }}{% endif %} {
     margin-top: {{ section.settings.margin_top_desktop }}px;
     margin-bottom: {{ section.settings.margin_bottom_desktop }}px;
     padding-top: {{ section.settings.padding_top_desktop }}px;
@@ -24,7 +24,7 @@
   }
 
   @media screen and (max-width: 768px) {
-    #shopify-section-{{ section.id }} .content-grid-wrapper {
+    #{% if section.settings.custom_section_id != blank %}{{ section.settings.custom_section_id }}{% else %}content-grid-{{ section.id }}{% endif %} {
       margin-top: {{ section.settings.margin_top_mobile }}px;
       margin-bottom: {{ section.settings.margin_bottom_mobile }}px;
       padding-top: {{ section.settings.padding_top_mobile }}px;
@@ -34,7 +34,7 @@
   
   /* Block-level CSS Variables */
   {% for block in section.blocks %}
-    #shopify-section-{{ section.id }} .grid-item-{{ block.id }} {
+    #{% if section.settings.custom_section_id != blank %}{{ section.settings.custom_section_id }}{% else %}content-grid-{{ section.id }}{% endif %} .grid-item-{{ block.id }} {
       --card-heading-font-size: {{ block.settings.heading_size_desktop }}px;
       --card-heading-font-size-mobile: {{ block.settings.heading_size_mobile }}px;
       --card-subheading-font-size: {{ block.settings.subheading_size_desktop }}px;
@@ -44,7 +44,7 @@
   {% endfor %}
 {% endstyle %}
 
-<div class="content-grid-wrapper" id="content-grid-{{ section.id }}">
+<div class="content-grid-wrapper" id="{% if section.settings.custom_section_id != blank %}{{ section.settings.custom_section_id }}{% else %}content-grid-{{ section.id }}{% endif %}">
   <div class="content-grid-container page-width">
     <div class="top_content">
       {% if section.settings.subheading != blank %}
@@ -149,9 +149,6 @@
                   line-height: {{ block.settings.heading_line_height }};
                   text-transform: {{ block.settings.heading_transform }};
                   margin-bottom: {{ block.settings.heading_margin_bottom }}px;
-                  {% if block.settings.heading_text_shadow %}
-                    text-shadow: 2px 2px 4px rgba(0,0,0,0.5);
-                  {% endif %}
                 ">
                   {{ block.settings.heading }}
                 </h3>
@@ -710,6 +707,16 @@
   "class": "content-grid-section",
   "max_blocks": 20,
   "settings": [
+    {
+      "type": "header",
+      "content": "General Settings"
+    },
+    {
+      "type": "text",
+      "id": "custom_section_id",
+      "label": "Custom Section ID",
+      "info": "Optional: Add a custom ID to this section (e.g., features-bar-wrapper)"
+    },
     {
       "type": "header",
       "content": "Top Section Content"

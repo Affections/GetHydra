@@ -1,3 +1,8 @@
+/* Smooth scrolling for anchor links */
+html {
+  scroll-behavior: smooth;
+}
+
 :root {
   --alpha-button-background: 1;
   --alpha-button-border: 1;
@@ -2796,7 +2801,7 @@ details[open] > .header__submenu {
 .header__menu-item {
   padding: 1.2rem;
   text-decoration: none;
-  color: rgba(var(--color-foreground), 0.75);
+  color: rgba(var(--color-foreground), 1);
 }
 
 .header__menu-item:hover {
@@ -3600,6 +3605,8 @@ details-disclosure > details {
 @media (max-width: 767px){
 .header {
     grid-template-areas: "icons heading left-icons" !important;
+    padding-left: 24px !important;
+    padding-right: 12px !important;
 }
 .header__icons {
     display: flex !important;
@@ -3611,4 +3618,39 @@ header-drawer {
     justify-self: end !important;
     margin-left: -1.2rem;
 }
+}
+
+.card-subheading_block {
+    font-family: 'Montserrat';
+    font-weight: 600;
+    font-size: 17px;
+    line-height: 130%;
+    letter-spacing: 0.01em;
+    text-transform: uppercase;
+    margin-top: 0px;
+    margin-bottom: 8px;
+}
+
+@media (max-width: 767px) {
+    .card-content {
+        padding-left: 24px !important;
+        padding-right: 24px !important;
+    }
+}
+
+.content-grid.grid-columns-3 .grid-item .card-content.vertical-align-bottom,
+.content-grid.grid-columns-2 .grid-item .card-content.vertical-align-bottom {
+    position: relative;
+    min-height: 280px;
+}
+
+@media (max-width: 767px) {
+    .content-grid.grid-columns-3 .grid-item .card-content.vertical-align-bottom,
+    .content-grid.grid-columns-2 .grid-item .card-content.vertical-align-bottom {
+        min-height: 230px;
+    }
+    
+    .content-grid[data-columns-mobile="1"] .grid-item .card-content.vertical-align-bottom {
+        min-height: unset;
+    }
 }
