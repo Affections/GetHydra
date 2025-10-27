@@ -1507,6 +1507,85 @@
           "default": 300,
           "info": "Only applies if 'Custom Height' is selected"
         },
+    {
+      "type": "select",
+      "id": "aspect_ratio",
+      "label": "Image Aspect Ratio",
+      "options": [
+        {
+          "value": "auto",
+          "label": "Auto (Based on card size)"
+        },
+        {
+          "value": "1-1",
+          "label": "Square (1:1)"
+        },
+        {
+          "value": "4-3",
+          "label": "Standard (4:3)"
+        },
+        {
+          "value": "3-2",
+          "label": "Classic (3:2)"
+        },
+        {
+          "value": "16-9",
+          "label": "Widescreen (16:9)"
+        },
+        {
+          "value": "21-9",
+          "label": "Ultra-wide (21:9)"
+        },
+        {
+          "value": "custom",
+          "label": "Custom Height"
+        }
+      ],
+      "default": "auto",
+      "info": "Control how tall the image container should be"
+    },
+    {
+      "type": "header",
+      "content": "Mobile Image Settings"
+    },
+    {
+      "type": "select",
+      "id": "mobile_aspect_ratio",
+      "label": "Mobile Aspect Ratio",
+      "options": [
+        {
+          "value": "same",
+          "label": "Same as Desktop"
+        },
+        {
+          "value": "1-1",
+          "label": "Square (1:1)"
+        },
+        {
+          "value": "4-3",
+          "label": "Standard (4:3)"
+        },
+        {
+          "value": "3-2",
+          "label": "Classic (3:2)"
+        },
+        {
+          "value": "16-9",
+          "label": "Widescreen (16:9)"
+        }
+      ],
+      "default": "1-1",
+      "info": "Different aspect ratio for mobile if needed"
+    },
+    {
+      "type": "checkbox",
+      "id": "maintain_image_aspect",
+      "label": "Maintain Original Image Aspect Ratio",
+      "default": false,
+      "info": "If enabled, images will use their original aspect ratio instead of the set ratio"
+    },
+
+
         {
           "type": "header",
           "content": "Card Image"
