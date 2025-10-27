@@ -1,0 +1,836 @@
+{% comment %}
+  Footer Section - Hydra Style
+  Fully responsive with CSS variables for dynamic font sizing
+{% endcomment %}
+
+<style>
+    :root {
+      /* Font Size Variables - Desktop */
+      --footer-company-name-size-desktop: {{ section.settings.company_name_font_size_desktop }}px;
+      --footer-body-text-size-desktop: {{ section.settings.body_font_size_desktop }}px;
+      --footer-menu-title-size-desktop: {{ section.settings.menu_title_font_size_desktop }}px;
+      --footer-link-size-desktop: {{ section.settings.link_font_size_desktop }}px;
+      --footer-social-icon-size-desktop: {{ section.settings.social_icon_size_desktop }}px;
+      
+      /* Font Size Variables - Mobile */
+      --footer-company-name-size-mobile: {{ section.settings.company_name_font_size_mobile }}px;
+      --footer-body-text-size-mobile: {{ section.settings.body_font_size_mobile }}px;
+      --footer-menu-title-size-mobile: {{ section.settings.menu_title_font_size_mobile }}px;
+      --footer-link-size-mobile: {{ section.settings.link_font_size_mobile }}px;
+      --footer-social-icon-size-mobile: {{ section.settings.social_icon_size_mobile }}px;
+      
+      /* Color Variables */
+      --footer-bg-color: {{ section.settings.background_color | default: '#F5E6F0' }};
+      --footer-company-name-color: {{ section.settings.company_name_color | default: '#4A0E4E' }};
+      --footer-body-text-color: {{ section.settings.body_text_color | default: '#4A0E4E' }};
+      --footer-menu-title-color: {{ section.settings.menu_title_color | default: '#4A0E4E' }};
+      --footer-link-color: {{ section.settings.link_color | default: '#4A0E4E' }};
+      --footer-social-icon-color: {{ section.settings.social_icon_color | default: '#4A0E4E' }};
+      
+      /* Spacing Variables */
+      --footer-margin-top: {{ section.settings.margin_top }}px;
+      --footer-margin-bottom: {{ section.settings.margin_bottom }}px;
+      --footer-padding-top-desktop: {{ section.settings.padding_top_desktop }}px;
+      --footer-padding-bottom-desktop: {{ section.settings.padding_bottom_desktop }}px;
+      --footer-padding-top-mobile: {{ section.settings.padding_top_mobile }}px;
+      --footer-padding-bottom-mobile: {{ section.settings.padding_bottom_mobile }}px;
+      
+      /* Border & Layout Variables */
+      --footer-border-color: #6E197D;
+      --footer-border-radius: 16px;
+      --footer-gap-desktop: 40px;
+      --footer-gap-mobile: 20px;
+    }
+
+    #footer-section-{{ section.id }} {
+      background-color: var(--footer-bg-color);
+      {% if section.settings.background_image %}
+        background-image: url('{{ section.settings.background_image | img_url: 'master' }}');
+        background-size: cover;
+        background-position: center;
+        background-repeat: no-repeat;
+      {% endif %}
+      padding-top: var(--footer-padding-top-desktop);
+      padding-bottom: var(--footer-padding-bottom-desktop);
+      margin-top: var(--footer-margin-top);
+      margin-bottom: var(--footer-margin-bottom);
+      border-radius: var(--footer-border-radius) var(--footer-border-radius) 0 0;
+    }
+
+    .footer-container {
+      margin: 0 auto;
+    }
+
+    .footer-main {
+      display: flex;
+      justify-content: space-between;
+      align-items: flex-start;
+      gap: var(--footer-gap-desktop);
+      flex-wrap: wrap;
+    }
+
+    .footer-left {
+      flex: 1;
+      min-width: 280px;
+      max-width: 650px;
+      display: flex;
+      flex-direction: column;
+      align-content: flex-start;
+      gap: 13px;
+      margin-top: 7px;
+    }
+
+    .footer-company-name {
+      font-size: var(--footer-company-name-size-desktop);
+      color: var(--footer-company-name-color);
+      line-height: 130%;
+      font-weight: 500;
+      letter-spacing: 0.5px;
+    }
+
+    .footer-abn,
+    .footer-location {
+      font-size: var(--footer-body-text-size-desktop);
+      color: var(--footer-body-text-color);
+      line-height: 130%;
+      font-weight: 500;
+    }
+
+    .footer-acknowledgment {
+      font-size: var(--footer-body-text-size-desktop);
+      color: var(--footer-body-text-color);
+      line-height: 1.6;
+    }
+
+    .footer-contact {
+      font-size: var(--footer-body-text-size-desktop);
+      color: var(--footer-link-color);
+      text-decoration: none;
+      display: inline-block;
+    }
+
+    .footer-contact:hover {
+      text-decoration: underline;
+    }
+
+    .footer-logo {
+      margin-top: 8px;
+    }
+
+    .footer-logo img {
+      height: auto;
+      width: 150px;
+    }
+
+    .footer-right {
+      flex: 1;
+      min-width: 280px;
+      max-width: 500px;
+    }
+
+    .footer-menu-item {
+      border-bottom: 1px solid var(--footer-border-color);
+      margin-bottom: 0;
+    }
+
+    .footer-menu-header {
+      display: flex;
+      justify-content: space-between;
+      align-items: center;
+      padding: 15px 0;
+      cursor: pointer;
+      user-select: none;
+    }
+
+    .footer-menu-title {
+      font-size: var(--footer-menu-title-size-desktop);
+      color: var(--footer-menu-title-color);
+      font-weight: 700;
+      line-height: 125%;
+      margin: 0;
+    }
+
+    .footer-menu-arrow {
+      color: var(--footer-menu-title-color);
+      font-size: 20px;
+      transition: transform 0.3s ease;
+    }
+
+    .footer-menu-item.active .footer-menu-arrow {
+      transform: rotate(90deg);
+    }
+
+    .footer-menu-content {
+      max-height: 0;
+      overflow: hidden;
+      transition: max-height 0.3s ease;
+    }
+
+    .footer-menu-item.active .footer-menu-content {
+      max-height: 500px;
+      padding-bottom: 20px;
+    }
+
+    .footer-menu-links {
+      list-style: none;
+      padding: 0;
+      margin: 0;
+    }
+
+    .footer-menu-links li {
+      margin-bottom: 12px;
+    }
+
+    .footer-menu-links a {
+      color: var(--footer-link-color);
+      text-decoration: none;
+      font-size: var(--footer-link-size-desktop);
+      line-height: 1.5;
+      transition: opacity 0.2s ease;
+    }
+
+    .footer-menu-links a:hover {
+      opacity: 0.7;
+    }
+
+    .footer-social {
+      display: flex;
+      gap: 30px;
+      padding-top: 22px;
+      justify-content: space-between;
+    }
+
+    .footer-social a {
+      color: var(--footer-social-icon-color);
+      font-size: var(--footer-social-icon-size-desktop);
+      transition: opacity 0.2s ease;
+      display: flex;
+      align-items: center;
+      justify-content: center;
+    }
+
+    .footer-social a svg {
+      width: var(--footer-social-icon-size-desktop);
+      height: var(--footer-social-icon-size-desktop);
+    }
+
+    .footer-social a:hover {
+      opacity: 0.7;
+    }
+
+    /* Tablet Styles */
+    @media screen and (max-width: 1024px) and (min-width: 768px) {
+      :root {
+        --footer-company-name-size-desktop: calc({{ section.settings.company_name_font_size_desktop }}px * 0.9);
+        --footer-body-text-size-desktop: calc({{ section.settings.body_font_size_desktop }}px * 0.95);
+        --footer-menu-title-size-desktop: calc({{ section.settings.menu_title_font_size_desktop }}px * 0.95);
+        --footer-link-size-desktop: calc({{ section.settings.link_font_size_desktop }}px * 0.95);
+        --footer-social-icon-size-desktop: calc({{ section.settings.social_icon_size_desktop }}px * 0.95);
+      }
+
+      .footer-main {
+        gap: 30px;
+      }
+    }
+
+    /* Mobile Styles */
+    @media screen and (max-width: 767px) {
+      #footer-section-{{ section.id }} {
+        padding-top: var(--footer-padding-top-mobile);
+        padding-bottom: var(--footer-padding-bottom-mobile);
+      }
+
+      .footer-container {
+        padding: 0 16px;
+      }
+
+      .footer-main {
+        flex-direction: column-reverse;
+        gap: var(--footer-gap-mobile);
+      }
+
+      .footer-left,
+      .footer-right {
+        max-width: 100%;
+        width: 100%;
+      }
+
+      .footer-company-name {
+        font-size: var(--footer-company-name-size-mobile);
+      }
+
+      .footer-abn,
+      .footer-location,
+      .footer-acknowledgment,
+      .footer-contact {
+        font-size: var(--footer-body-text-size-mobile);
+      }
+
+      .footer-menu-title {
+        font-size: var(--footer-menu-title-size-mobile);
+      }
+
+      .footer-menu-links a {
+        font-size: var(--footer-link-size-mobile);
+      }
+
+      .footer-social a {
+        font-size: var(--footer-social-icon-size-mobile);
+      }
+
+      .footer-social a svg {
+        width: var(--footer-social-icon-size-mobile);
+        height: var(--footer-social-icon-size-mobile);
+      }
+
+      .footer-logo {
+        text-align: center;
+        overflow: hidden;
+      }
+
+      .footer-menu-header {
+        padding: 16px 0;
+      }
+    }
+
+    /* Small Mobile */
+    @media screen and (max-width: 480px) {
+      .footer-social {
+        gap: 20px;
+      }
+    }
+</style>
+
+<footer id="footer-section-{{ section.id }}" class="footer-section">
+  <div class="footer-container page-width">
+    <div class="footer-main">
+      <!-- Left Side: Company Info -->
+      <div class="footer-left">
+        {% if section.settings.company_name != blank %}
+          <div class="footer-company-name">{{ section.settings.company_name }}</div>
+        {% endif %}
+
+        {% if section.settings.abn_number != blank %}
+          <div class="footer-abn">{{ section.settings.abn_number }}</div>
+        {% endif %}
+
+        {% if section.settings.location != blank %}
+          <div class="footer-location">{{ section.settings.location }}</div>
+        {% endif %}
+
+        {% if section.settings.acknowledgment_text != blank %}
+          <div class="footer-acknowledgment">{{ section.settings.acknowledgment_text }}</div>
+        {% endif %}
+
+        {% if section.settings.contact_email != blank %}
+          <a href="mailto:{{ section.settings.contact_email }}" class="footer-contact">
+            Need assistance? Contact us at {{ section.settings.contact_email }}
+          </a>
+        {% endif %}
+
+        {% if section.settings.logo != blank %}
+          <div class="footer-logo">
+            <img
+              src="{{ section.settings.logo | img_url: '300x' }}"
+              alt="{{ section.settings.company_name }}"
+              loading="lazy"
+            >
+          </div>
+        {% endif %}
+      </div>
+
+      <!-- Right Side: Menu Sections -->
+      <div class="footer-right">
+        {% for block in section.blocks %}
+          {% case block.type %}
+            {% when 'menu' %}
+              <div class="footer-menu-item" data-block-id="{{ block.id }}">
+                <div
+                  class="footer-menu-header"
+                  onclick="toggleFooterMenu(this)"
+                  {% if forloop.first %}
+                    style="padding:0px 0 15px;"
+                  {% endif %}
+                >
+                  <h3 class="footer-menu-title">{{ block.settings.menu_title }}</h3>
+                  <span class="footer-menu-arrow">
+                    <svg width="10" height="16" viewBox="0 0 10 16" fill="none" xmlns="http://www.w3.org/2000/svg">
+                      <path d="M0.000121117 16L9.37646 8L0.000121117 0L0.000121117 16Z" fill="currentColor"></path>
+                    </svg>
+                  </span>
+                </div>
+                <div class="footer-menu-content">
+                  {% if block.settings.menu != blank %}
+                    <ul class="footer-menu-links">
+                      {% for link in linklists[block.settings.menu].links %}
+                        <li>
+                          <a href="{{ link.url }}">{{ link.title }}</a>
+                        </li>
+                      {% endfor %}
+                    </ul>
+                  {% endif %}
+                </div>
+              </div>
+          {% endcase %}
+        {% endfor %}
+
+        <!-- Social Media Icons -->
+        {% if section.settings.show_social_icons %}
+          <div class="footer-social">
+            {% if section.settings.tiktok_url != blank %}
+              <a href="{{ section.settings.tiktok_url }}" target="_blank" rel="noopener" aria-label="TikTok">
+                <svg viewBox="0 0 24 24" fill="none" xmlns="http://www.w3.org/2000/svg">
+                  <g clip-path="url(#clip0_1_297)">
+                  <path d="M12.5251 0.02C13.8351 0 15.1351 0.01 16.4351 0C16.5151 1.53 17.0651 3.09 18.1851 4.17C19.3051 5.28 20.8851 5.79 22.4251 5.96V9.99C20.9851 9.94 19.5351 9.64 18.2251 9.02C17.6551 8.76 17.1251 8.43 16.6051 8.09C16.5951 11.01 16.6151 13.93 16.5851 16.84C16.5051 18.24 16.0451 19.63 15.2351 20.78C13.9251 22.7 11.6551 23.95 9.32512 23.99C7.89512 24.07 6.46512 23.68 5.24512 22.96C3.22512 21.77 1.80512 19.59 1.59512 17.25C1.57512 16.75 1.56512 16.25 1.58512 15.76C1.76512 13.86 2.70512 12.04 4.16512 10.8C5.82512 9.36 8.14512 8.67 10.3151 9.08C10.3351 10.56 10.2751 12.04 10.2751 13.52C9.28512 13.2 8.12512 13.29 7.25512 13.89C6.62512 14.3 6.14512 14.93 5.89512 15.64C5.68512 16.15 5.74512 16.71 5.75512 17.25C5.99512 18.89 7.57512 20.27 9.25512 20.12C10.3751 20.11 11.4451 19.46 12.0251 18.51C12.2151 18.18 12.4251 17.84 12.4351 17.45C12.5351 15.66 12.4951 13.88 12.5051 12.09C12.5151 8.06 12.4951 4.04 12.5251 0.02Z" fill="currentColor"/>
+                  </g>
+                  <defs>
+                  <clipPath id="clip0_1_297">
+                  <rect width="24" height="24" fill="white"/>
+                  </clipPath>
+                  </defs>
+                </svg>
+              </a>
+            {% endif %}
+
+            {% if section.settings.instagram_url != blank %}
+              <a href="{{ section.settings.instagram_url }}" target="_blank" rel="noopener" aria-label="Instagram">
+                <svg viewBox="0 0 24 24" fill="none" xmlns="http://www.w3.org/2000/svg">
+                  <g clip-path="url(#clip0_1_299)">
+                  <path d="M7.03008 0.0840168C5.75328 0.144217 4.88138 0.348017 4.11908 0.647417C3.33028 0.954917 2.66158 1.36742 1.99628 2.03512C1.33108 2.70282 0.921282 3.37192 0.616082 4.16212C0.320682 4.92592 0.120482 5.79862 0.0640816 7.07612C0.00768159 8.35362 -0.00481841 8.76432 0.00148159 12.0231C0.00768159 15.2817 0.0220816 15.6902 0.0839816 16.9704C0.144982 18.2469 0.347982 19.1186 0.647482 19.8811C0.955482 20.67 1.36748 21.3384 2.03548 22.0039C2.70338 22.6694 3.37198 23.0782 4.16398 23.3839C4.92718 23.6789 5.80008 23.88 7.07738 23.9359C8.35468 23.9919 8.76578 24.0049 12.0236 23.9986C15.2814 23.9924 15.6916 23.9779 16.9714 23.9172C18.2514 23.8565 19.1184 23.652 19.8812 23.3539C20.6701 23.0453 21.339 22.6339 22.004 21.9658C22.669 21.2976 23.0785 20.628 23.3835 19.8374C23.6792 19.0742 23.8801 18.2014 23.9355 16.925C23.9915 15.6441 24.0047 15.2352 23.9985 11.977C23.9922 8.71872 23.9775 8.31022 23.9168 7.03052C23.8561 5.75082 23.6528 4.88182 23.3535 4.11882C23.0451 3.32992 22.6335 2.66202 21.9659 1.99602C21.2982 1.33002 20.628 0.920817 19.8378 0.616517C19.074 0.321017 18.2017 0.119717 16.9244 0.0645168C15.6471 0.00931678 15.236 -0.00498321 11.977 0.00141679C8.71798 0.00761679 8.30998 0.0216168 7.03008 0.0840168ZM7.17028 21.7771C6.00028 21.7262 5.36498 21.5318 4.94158 21.3691C4.38098 21.1531 3.98158 20.892 3.55968 20.4741C3.13768 20.0563 2.87858 19.6555 2.65968 19.0961C2.49528 18.6727 2.29728 18.0381 2.24258 16.8681C2.18308 15.6036 2.17058 15.2239 2.16358 12.0201C2.15658 8.81642 2.16888 8.43712 2.22428 7.17212C2.27428 6.00312 2.46988 5.36712 2.63228 4.94392C2.84828 4.38262 3.10848 3.98392 3.52728 3.56232C3.94608 3.14062 4.34568 2.88092 4.90558 2.66202C5.32858 2.49692 5.96308 2.30062 7.13258 2.24492C8.39808 2.18492 8.77728 2.17292 11.9806 2.16592C15.1839 2.15892 15.5641 2.17092 16.8301 2.22672C17.9991 2.27752 18.6354 2.47122 19.0581 2.63472C19.6189 2.85072 20.0181 3.11012 20.4397 3.52972C20.8614 3.94912 21.1213 4.34732 21.3402 4.90842C21.5055 5.33012 21.7019 5.96442 21.7571 7.13472C21.8173 8.40022 21.831 8.77972 21.8367 11.9827C21.8425 15.1857 21.8312 15.5661 21.7757 16.8307C21.7247 18.0007 21.5307 18.6362 21.3677 19.0601C21.1517 19.6205 20.8914 20.0201 20.4723 20.4415C20.0533 20.863 19.6542 21.1226 19.094 21.3415C18.6716 21.5064 18.0363 21.7032 16.8678 21.7589C15.6022 21.8184 15.223 21.8309 12.0185 21.8379C8.81398 21.8449 8.43578 21.8319 7.17028 21.7771ZM16.953 5.58642C16.9535 5.87125 17.0384 6.14954 17.197 6.38609C17.3557 6.62265 17.5809 6.80684 17.8443 6.91537C18.1076 7.02391 18.3972 7.05191 18.6765 6.99583C18.9557 6.93975 19.2121 6.80212 19.4131 6.60034C19.6141 6.39855 19.7508 6.14169 19.8058 5.86222C19.8609 5.58276 19.8318 5.29325 19.7223 5.03032C19.6128 4.76739 19.4277 4.54284 19.1906 4.38508C18.9534 4.22731 18.6748 4.14342 18.39 4.14402C18.0082 4.14481 17.6423 4.29721 17.3728 4.56769C17.1034 4.83818 16.9523 5.20461 16.953 5.58642ZM5.83848 12.012C5.84518 15.4152 8.60908 18.1677 12.0115 18.1613C15.4141 18.1548 18.1685 15.3912 18.1621 11.988C18.1556 8.58482 15.3911 5.83152 11.9881 5.83822C8.58508 5.84492 5.83208 8.60922 5.83848 12.012ZM7.99998 12.0077C7.99842 11.2166 8.23149 10.4428 8.66971 9.78412C9.10793 9.12546 9.73163 8.61154 10.4619 8.30735C11.1922 8.00315 11.9963 7.92234 12.7726 8.07514C13.5488 8.22794 14.2623 8.60749 14.8228 9.16578C15.3833 9.72408 15.7657 10.436 15.9216 11.2117C16.0774 11.9873 15.9998 12.7917 15.6985 13.5232C15.3972 14.2547 14.8858 14.8804 14.2289 15.3213C13.572 15.7621 12.7991 15.9982 12.008 15.9998C11.4827 16.0009 10.9623 15.8985 10.4766 15.6985C9.99082 15.4985 9.54925 15.2047 9.17706 14.834C8.80487 14.4633 8.50935 14.0229 8.30739 13.5379C8.10542 13.053 8.00097 12.533 7.99998 12.0077Z" fill="currentColor"/>
+                  </g>
+                  <defs>
+                  <clipPath id="clip0_1_299">
+                  <rect width="24" height="24" fill="white"/>
+                  </clipPath>
+                  </defs>
+                </svg>
+              </a>
+            {% endif %}
+
+            {% if section.settings.youtube_url != blank %}
+              <a href="{{ section.settings.youtube_url }}" target="_blank" rel="noopener" aria-label="YouTube">
+                <svg viewBox="0 0 24 24" fill="none" xmlns="http://www.w3.org/2000/svg">
+                  <path d="M23.498 6.18592C23.3624 5.6752 23.095 5.20906 22.7226 4.83419C22.3502 4.45931 21.8858 4.18886 21.376 4.04992C19.505 3.54492 12 3.54492 12 3.54492C12 3.54492 4.495 3.54492 2.623 4.04992C2.11341 4.18911 1.64929 4.45966 1.27708 4.8345C0.904861 5.20935 0.637591 5.67536 0.502 6.18592C0 8.06992 0 11.9999 0 11.9999C0 11.9999 0 15.9299 0.502 17.8139C0.637586 18.3246 0.904975 18.7908 1.27739 19.1657C1.64981 19.5405 2.11418 19.811 2.624 19.9499C4.495 20.4549 12 20.4549 12 20.4549C12 20.4549 19.505 20.4549 21.377 19.9499C21.8869 19.8111 22.3513 19.5407 22.7237 19.1658C23.0961 18.7909 23.3635 18.3247 23.499 17.8139C24 15.9299 24 11.9999 24 11.9999C24 11.9999 24 8.06992 23.498 6.18592ZM9.545 15.5679V8.43192L15.818 11.9999L9.545 15.5679Z" fill="currentColor"/>
+                </svg>
+              </a>
+            {% endif %}
+
+            {% if section.settings.kick_url != blank %}
+              <a href="{{ section.settings.kick_url }}" target="_blank" rel="noopener" aria-label="Kick">
+                <svg viewBox="0 0 24 24" fill="none" xmlns="http://www.w3.org/2000/svg">
+                  <g clip-path="url(#clip0_1_303)"><path d="M1.33301 0H9.33301V5.333H12V2.667H14.667V0H22.667V8H20V10.667H17.333V13.333H20V16H22.667V24H14.667V21.333H12V18.667H9.33301V24H1.33301V0Z" fill="currentColor"/></g><defs><clipPath id="clip0_1_303"><rect width="24" height="24" fill="white"/></clipPath></defs>
+                </svg>
+              </a>
+            {% endif %}
+
+            {% if section.settings.twitch_url != blank %}
+              <a href="{{ section.settings.twitch_url }}" target="_blank" rel="noopener" aria-label="Twitch">
+                <svg viewBox="0 0 24 24" fill="none" xmlns="http://www.w3.org/2000/svg">
+                  <g clip-path="url(#clip0_1_305)">
+                  <path d="M11.5709 4.714H13.2859V9.857H11.5699L11.5709 4.714ZM16.2859 4.714H17.9999V9.857H16.2859V4.714ZM5.99987 0L1.71387 4.286V19.714H6.85687V24L11.1429 19.714H14.5709L22.2859 12V0H5.99987ZM20.5709 11.143L17.1429 14.571H13.7139L10.7139 17.571V14.571H6.85687V1.714H20.5709V11.143Z" fill="currentColor"/>
+                  </g>
+                  <defs>
+                  <clipPath id="clip0_1_305">
+                  <rect width="24" height="24" fill="white"/>
+                  </clipPath>
+                  </defs>
+                </svg>
+              </a>
+            {% endif %}
+          </div>
+        {% endif %}
+      </div>
+    </div>
+  </div>
+</footer>
+
+<script>
+  function toggleFooterMenu(header) {
+    const menuItem = header.parentElement;
+    const isActive = menuItem.classList.contains('active');
+
+    // Close all menu items
+    document.querySelectorAll('.footer-menu-item').forEach(item => {
+      item.classList.remove('active');
+    });
+
+    // Open clicked item if it wasn't active
+    if (!isActive) {
+      menuItem.classList.add('active');
+    }
+  }
+
+  // Keep all menus CLOSED by default (desktop + mobile)
+  document.addEventListener('DOMContentLoaded', function() {
+    document.querySelectorAll('.footer-menu-item').forEach(item => {
+      item.classList.remove('active');
+    });
+  });
+
+  // Handle resize
+  let resizeTimer;
+  window.addEventListener('resize', function() {
+    clearTimeout(resizeTimer);
+    resizeTimer = setTimeout(function() {
+      // Always keep menus closed when resizing
+      document.querySelectorAll('.footer-menu-item').forEach(item => {
+        item.classList.remove('active');
+      });
+    }, 250);
+  });
+</script>
+
+{% schema %}
+{
+  "name": "Footer Section",
+  "class": "footer-section-wrapper",
+  "settings": [
+    {
+      "type": "header",
+      "content": "Section Spacing"
+    },
+    {
+      "type": "range",
+      "id": "margin_top",
+      "min": 0,
+      "max": 200,
+      "step": 5,
+      "unit": "px",
+      "label": "Margin Top",
+      "default": 0
+    },
+    {
+      "type": "range",
+      "id": "margin_bottom",
+      "min": 0,
+      "max": 200,
+      "step": 5,
+      "unit": "px",
+      "label": "Margin Bottom",
+      "default": 0
+    },
+    {
+      "type": "range",
+      "id": "padding_top_desktop",
+      "min": 0,
+      "max": 200,
+      "step": 5,
+      "unit": "px",
+      "label": "Padding Top (Desktop)",
+      "default": 60
+    },
+    {
+      "type": "range",
+      "id": "padding_bottom_desktop",
+      "min": 0,
+      "max": 200,
+      "step": 5,
+      "unit": "px",
+      "label": "Padding Bottom (Desktop)",
+      "default": 60
+    },
+    {
+      "type": "range",
+      "id": "padding_top_mobile",
+      "min": 0,
+      "max": 150,
+      "step": 5,
+      "unit": "px",
+      "label": "Padding Top (Mobile)",
+      "default": 40
+    },
+    {
+      "type": "range",
+      "id": "padding_bottom_mobile",
+      "min": 0,
+      "max": 150,
+      "step": 5,
+      "unit": "px",
+      "label": "Padding Bottom (Mobile)",
+      "default": 40
+    },
+    {
+      "type": "header",
+      "content": "Background"
+    },
+    {
+      "type": "color",
+      "id": "background_color",
+      "label": "Background Color",
+      "default": "#F5E6F0"
+    },
+    {
+      "type": "image_picker",
+      "id": "background_image",
+      "label": "Background Image",
+      "info": "Optional background image. Will overlay on background color."
+    },
+    {
+      "type": "header",
+      "content": "Company Information"
+    },
+    {
+      "type": "text",
+      "id": "company_name",
+      "label": "Company Name",
+      "default": "APPLIED LONGEVITY PTY LTD"
+    },
+    {
+      "type": "text",
+      "id": "abn_number",
+      "label": "ABN Number",
+      "default": "ABN 43608555973"
+    },
+    {
+      "type": "text",
+      "id": "location",
+      "label": "Location",
+      "default": "Naarm (Wurundjeri Country), Melbourne, Australia"
+    },
+    {
+      "type": "textarea",
+      "id": "acknowledgment_text",
+      "label": "Acknowledgment Text",
+      "default": "We acknowledge the Wurundjeri Woi-wurrung people of the Kulin Nation as the Traditional Owners of the land and pay our respects to Elders past and present."
+    },
+    {
+      "type": "text",
+      "id": "contact_email",
+      "label": "Contact Email",
+      "default": "help@gethydra.club"
+    },
+    {
+      "type": "image_picker",
+      "id": "logo",
+      "label": "Footer Logo"
+    },
+    {
+      "type": "header",
+      "content": "Company Name Typography"
+    },
+    {
+      "type": "range",
+      "id": "company_name_font_size_desktop",
+      "min": 10,
+      "max": 40,
+      "step": 1,
+      "unit": "px",
+      "label": "Company Name Font Size (Desktop)",
+      "default": 14
+    },
+    {
+      "type": "range",
+      "id": "company_name_font_size_mobile",
+      "min": 8,
+      "max": 30,
+      "step": 1,
+      "unit": "px",
+      "label": "Company Name Font Size (Mobile)",
+      "default": 12
+    },
+    {
+      "type": "color",
+      "id": "company_name_color",
+      "label": "Company Name Color",
+      "default": "#4A0E4E"
+    },
+    {
+      "type": "header",
+      "content": "Body Text Typography"
+    },
+    {
+      "type": "range",
+      "id": "body_font_size_desktop",
+      "min": 10,
+      "max": 30,
+      "step": 1,
+      "unit": "px",
+      "label": "Body Text Font Size (Desktop)",
+      "default": 13
+    },
+    {
+      "type": "range",
+      "id": "body_font_size_mobile",
+      "min": 8,
+      "max": 24,
+      "step": 1,
+      "unit": "px",
+      "label": "Body Text Font Size (Mobile)",
+      "default": 12
+    },
+    {
+      "type": "color",
+      "id": "body_text_color",
+      "label": "Body Text Color",
+      "default": "#4A0E4E"
+    },
+    {
+      "type": "header",
+      "content": "Menu Title Typography"
+    },
+    {
+      "type": "range",
+      "id": "menu_title_font_size_desktop",
+      "min": 12,
+      "max": 40,
+      "step": 1,
+      "unit": "px",
+      "label": "Menu Title Font Size (Desktop)",
+      "default": 18
+    },
+    {
+      "type": "range",
+      "id": "menu_title_font_size_mobile",
+      "min": 10,
+      "max": 32,
+      "step": 1,
+      "unit": "px",
+      "label": "Menu Title Font Size (Mobile)",
+      "default": 16
+    },
+    {
+      "type": "color",
+      "id": "menu_title_color",
+      "label": "Menu Title Color",
+      "default": "#4A0E4E"
+    },
+    {
+      "type": "header",
+      "content": "Link Typography"
+    },
+    {
+      "type": "range",
+      "id": "link_font_size_desktop",
+      "min": 10,
+      "max": 30,
+      "step": 1,
+      "unit": "px",
+      "label": "Link Font Size (Desktop)",
+      "default": 14
+    },
+    {
+      "type": "range",
+      "id": "link_font_size_mobile",
+      "min": 8,
+      "max": 24,
+      "step": 1,
+      "unit": "px",
+      "label": "Link Font Size (Mobile)",
+      "default": 13
+    },
+    {
+      "type": "color",
+      "id": "link_color",
+      "label": "Link Color",
+      "default": "#4A0E4E"
+    },
+    {
+      "type": "header",
+      "content": "Social Media"
+    },
+    {
+      "type": "checkbox",
+      "id": "show_social_icons",
+      "label": "Show Social Media Icons",
+      "default": true
+    },
+    {
+      "type": "range",
+      "id": "social_icon_size_desktop",
+      "min": 16,
+      "max": 48,
+      "step": 2,
+      "unit": "px",
+      "label": "Social Icon Size (Desktop)",
+      "default": 24
+    },
+    {
+      "type": "range",
+      "id": "social_icon_size_mobile",
+      "min": 14,
+      "max": 40,
+      "step": 2,
+      "unit": "px",
+      "label": "Social Icon Size (Mobile)",
+      "default": 22
+    },
+    {
+      "type": "color",
+      "id": "social_icon_color",
+      "label": "Social Icon Color",
+      "default": "#4A0E4E"
+    },
+    {
+      "type": "url",
+      "id": "tiktok_url",
+      "label": "TikTok URL"
+    },
+    {
+      "type": "url",
+      "id": "instagram_url",
+      "label": "Instagram URL"
+    },
+    {
+      "type": "url",
+      "id": "youtube_url",
+      "label": "YouTube URL"
+    },
+    {
+      "type": "url",
+      "id": "kick_url",
+      "label": "Kick URL"
+    },
+    {
+      "type": "url",
+      "id": "twitch_url",
+      "label": "Twitch URL"
+    }
+  ],
+  "blocks": [
+    {
+      "type": "menu",
+      "name": "Menu Section",
+      "settings": [
+        {
+          "type": "text",
+          "id": "menu_title",
+          "label": "Menu Title",
+          "default": "Shop"
+        },
+        {
+          "type": "link_list",
+          "id": "menu",
+          "label": "Menu",
+          "info": "Select a menu to display links"
+        }
+      ]
+    }
+  ],
+  "presets": [
+    {
+      "name": "Footer Section",
+      "category": "Footer",
+      "blocks": [
+        {
+          "type": "menu",
+          "settings": {
+            "menu_title": "Shop"
+          }
+        },
+        {
+          "type": "menu",
+          "settings": {
+            "menu_title": "Explore"
+          }
+        },
+        {
+          "type": "menu",
+          "settings": {
+            "menu_title": "Support"
+          }
+        }
+      ]
+    }
+  ]
+}
+{% endschema %}
