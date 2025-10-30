@@ -3620,6 +3620,13 @@ header-drawer {
 }
 }
 
+/* Custom: third content-grid card subheading spacing */
+@media screen and (min-width: 1279px) {
+  .grid-item-card_AEgtx6 .card-subheading {
+    margin-bottom: 49px !important;
+  }
+}
+
 .card-subheading_block {
     font-family: 'Montserrat';
     font-weight: 600;

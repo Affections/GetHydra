@@ -45,7 +45,7 @@
             "subheading_color": "#ffffff",
             "subheading_size_desktop": 19,
             "subheading_size_mobile": 15,
-            "subheading_weight": "500",
+            "subheading_weight": "400",
             "subheading_letter_spacing": 0,
             "subheading_line_height": 1.5,
             "button_gap": 10,
@@ -119,7 +119,7 @@
             "subheading_color": "#0f0546",
             "subheading_size_desktop": 17,
             "subheading_size_mobile": 16,
-            "subheading_weight": "500",
+            "subheading_weight": "400",
             "subheading_letter_spacing": 0,
             "subheading_line_height": 1.3
           }
@@ -147,7 +147,7 @@
             "subheading_color": "#0f0546",
             "subheading_size_desktop": 17,
             "subheading_size_mobile": 16,
-            "subheading_weight": "500",
+            "subheading_weight": "400",
             "subheading_letter_spacing": 0,
             "subheading_line_height": 1.3
           }
@@ -175,7 +175,7 @@
             "subheading_color": "#0f0546",
             "subheading_size_desktop": 17,
             "subheading_size_mobile": 16,
-            "subheading_weight": "500",
+            "subheading_weight": "400",
             "subheading_letter_spacing": 0,
             "subheading_line_height": 1.3
           }
@@ -203,7 +203,7 @@
             "subheading_color": "#0f0546",
             "subheading_size_desktop": 17,
             "subheading_size_mobile": 16,
-            "subheading_weight": "500",
+            "subheading_weight": "400",
             "subheading_letter_spacing": 0,
             "subheading_line_height": 1.3
           }
@@ -288,11 +288,11 @@
             "heading_transform": "none",
             "heading_text_shadow": false,
             "heading_margin_bottom": 8,
-            "subheading": "Share goals, routine & <br preferences.>",
+            "subheading": "Share goals, routine & preferences.",
             "subheading_color": "#ffffff",
             "subheading_size_desktop": 19,
             "subheading_size_mobile": 16,
-            "subheading_weight": "500",
+            "subheading_weight": "400",
             "subheading_letter_spacing": 0,
             "subheading_line_height": 1.5,
             "subheading_text_shadow": false,
@@ -350,7 +350,7 @@
             "subheading_color": "#ffffff",
             "subheading_size_desktop": 19,
             "subheading_size_mobile": 16,
-            "subheading_weight": "500",
+            "subheading_weight": "400",
             "subheading_letter_spacing": 0,
             "subheading_line_height": 1.5,
             "subheading_text_shadow": false,
@@ -408,7 +408,7 @@
             "subheading_color": "#ffffff",
             "subheading_size_desktop": 19,
             "subheading_size_mobile": 16,
-            "subheading_weight": "500",
+            "subheading_weight": "400",
             "subheading_letter_spacing": 0,
             "subheading_line_height": 1.5,
             "subheading_text_shadow": false,
